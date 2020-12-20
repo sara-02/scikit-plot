@@ -30,10 +30,20 @@ from scikitplot.helpers import binary_ks_curve, validate_labels
 from scikitplot.helpers import cumulative_gain_curve
 
 
-def plot_confusion_matrix(y_true, y_pred, labels=None, true_labels=None,
-                          pred_labels=None, title=None, normalize=False,
-                          hide_zeros=False, hide_counts=False, x_tick_rotation=0, ax=None,
-                          figsize=None, cmap='Blues', title_fontsize="large",
+def plot_confusion_matrix(y_true,
+                          y_pred,
+                          labels=None,
+                          true_labels=None,
+                          pred_labels=None,
+                          title=None,
+                          normalize=False,
+                          hide_zeros=False,
+                          hide_counts=False,
+                          x_tick_rotation=0,
+                          ax=None,
+                          figsize=None,
+                          cmap='Blues',
+                          title_fontsize="large",
                           text_fontsize="medium"):
     """Generates confusion matrix plot from predictions and true labels
 
@@ -157,7 +167,8 @@ def plot_confusion_matrix(y_true, y_pred, labels=None, true_labels=None,
     x_tick_marks = np.arange(len(pred_classes))
     y_tick_marks = np.arange(len(true_classes))
     ax.set_xticks(x_tick_marks)
-    ax.set_xticklabels(pred_classes, fontsize=text_fontsize,
+    ax.set_xticklabels(pred_classes,
+                       fontsize=text_fontsize,
                        rotation=x_tick_rotation)
     ax.set_yticks(y_tick_marks)
     ax.set_yticklabels(true_classes, fontsize=text_fontsize)
@@ -167,7 +178,9 @@ def plot_confusion_matrix(y_true, y_pred, labels=None, true_labels=None,
     if not hide_counts:
         for i, j in itertools.product(range(cm.shape[0]), range(cm.shape[1])):
             if not (hide_zeros and cm[i, j] == 0):
-                ax.text(j, i, cm[i, j],
+                ax.text(j,
+                        i,
+                        cm[i, j],
                         horizontalalignment="center",
                         verticalalignment="center",
                         fontsize=text_fontsize,
@@ -182,10 +195,15 @@ def plot_confusion_matrix(y_true, y_pred, labels=None, true_labels=None,
 
 @deprecated('This will be removed in v0.5.0. Please use '
             'scikitplot.metrics.plot_roc instead.')
-def plot_roc_curve(y_true, y_probas, title='ROC Curves',
+def plot_roc_curve(y_true,
+                   y_probas,
+                   title='ROC Curves',
                    curves=('micro', 'macro', 'each_class'),
-                   ax=None, figsize=None, cmap='nipy_spectral',
-                   title_fontsize="large", text_fontsize="medium"):
+                   ax=None,
+                   figsize=None,
+                   cmap='nipy_spectral',
+                   title_fontsize="large",
+                   text_fontsize="medium"):
     """Generates the ROC curves from labels and predicted scores/probabilities
 
     Args:
@@ -254,7 +272,8 @@ def plot_roc_curve(y_true, y_probas, title='ROC Curves',
     tpr = dict()
     roc_auc = dict()
     for i in range(len(classes)):
-        fpr[i], tpr[i], _ = roc_curve(y_true, probas[:, i],
+        fpr[i], tpr[i], _ = roc_curve(y_true,
+                                      probas[:, i],
                                       pos_label=classes[i])
         roc_auc[i] = auc(fpr[i], tpr[i])
 
@@ -303,21 +322,30 @@ def plot_roc_curve(y_true, y_probas, title='ROC Curves',
     if 'each_class' in curves:
         for i in range(len(classes)):
             color = plt.cm.get_cmap(cmap)(float(i) / len(classes))
-            ax.plot(fpr[i], tpr[i], lw=2, color=color,
+            ax.plot(fpr[i],
+                    tpr[i],
+                    lw=2,
+                    color=color,
                     label='ROC curve of class {0} (area = {1:0.2f})'
                     ''.format(classes[i], roc_auc[i]))
 
     if 'micro' in curves:
-        ax.plot(fpr[micro_key], tpr[micro_key],
+        ax.plot(fpr[micro_key],
+                tpr[micro_key],
                 label='micro-average ROC curve '
-                      '(area = {0:0.2f})'.format(roc_auc[micro_key]),
-                color='deeppink', linestyle=':', linewidth=4)
+                '(area = {0:0.2f})'.format(roc_auc[micro_key]),
+                color='deeppink',
+                linestyle=':',
+                linewidth=4)
 
     if 'macro' in curves:
-        ax.plot(fpr[macro_key], tpr[macro_key],
+        ax.plot(fpr[macro_key],
+                tpr[macro_key],
                 label='macro-average ROC curve '
-                      '(area = {0:0.2f})'.format(roc_auc[macro_key]),
-                color='navy', linestyle=':', linewidth=4)
+                '(area = {0:0.2f})'.format(roc_auc[macro_key]),
+                color='navy',
+                linestyle=':',
+                linewidth=4)
 
     ax.plot([0, 1], [0, 1], 'k--', lw=2)
     ax.set_xlim([0.0, 1.0])
@@ -329,10 +357,17 @@ def plot_roc_curve(y_true, y_probas, title='ROC Curves',
     return ax
 
 
-def plot_roc(y_true, y_probas, title='ROC Curves',
-                   plot_micro=True, plot_macro=True, classes_to_plot=None,
-                   ax=None, figsize=None, cmap='nipy_spectral',
-                   title_fontsize="large", text_fontsize="medium"):
+def plot_roc(y_true,
+             y_probas,
+             title='ROC Curves',
+             plot_micro=True,
+             plot_macro=True,
+             classes_to_plot=None,
+             ax=None,
+             figsize=None,
+             cmap='nipy_spectral',
+             title_fontsize="large",
+             text_fontsize="medium"):
     """Generates the ROC curves from labels and predicted scores/probabilities
 
     Args:
@@ -402,7 +437,7 @@ def plot_roc(y_true, y_probas, title='ROC Curves',
         classes_to_plot = classes
 
     if ax is None:
-        fig, ax = plt.subplots(1, 1, figsize=figsize)
+        fig, ax = plt.subplots(1, 1, figsize=figsize, dpi=650)
 
     ax.set_title(title, fontsize=title_fontsize)
 
@@ -410,16 +445,21 @@ def plot_roc(y_true, y_probas, title='ROC Curves',
     tpr_dict = dict()
 
     indices_to_plot = np.in1d(classes, classes_to_plot)
-    line_types = ['solid','dotted']
+    line_types = ['solid', ':'] * (len(classes) // 2)
     for i, to_plot in enumerate(indices_to_plot):
-        fpr_dict[i], tpr_dict[i], _ = roc_curve(y_true, probas[:, i],
+        fpr_dict[i], tpr_dict[i], _ = roc_curve(y_true,
+                                                probas[:, i],
                                                 pos_label=classes[i])
         if to_plot:
             roc_auc = auc(fpr_dict[i], tpr_dict[i])
             color = plt.cm.get_cmap(cmap)(float(i) / len(classes))
-            ax.plot(fpr_dict[i], tpr_dict[i], lw=2, color=color,
-                    label='ROC curve of class {0} (area = {1:0.2f})'
-                          ''.format(classes[i], roc_auc),linestyle=line_types[i], linewidth=4)
+            ax.plot(fpr_dict[i],
+                    tpr_dict[i],
+                    lw=4,
+                    color=color,
+                    label='Class {0} (AUC = {1:0.2f})'
+                    ''.format(classes[i], roc_auc),
+                    linestyle=line_types[i])
 
     if plot_micro:
         binarized_y_true = label_binarize(y_true, classes=classes)
@@ -428,15 +468,19 @@ def plot_roc(y_true, y_probas, title='ROC Curves',
                 (1 - binarized_y_true, binarized_y_true))
         fpr, tpr, _ = roc_curve(binarized_y_true.ravel(), probas.ravel())
         roc_auc = auc(fpr, tpr)
-        ax.plot(fpr, tpr,
+        ax.plot(fpr,
+                tpr,
                 label='micro-average ROC curve '
-                      '(area = {0:0.2f})'.format(roc_auc),
-                color='deeppink', linestyle=':', linewidth=4)
+                '(area = {0:0.2f})'.format(roc_auc),
+                color='deeppink',
+                linestyle=':',
+                linewidth=4)
 
     if plot_macro:
         # Compute macro-average ROC curve and ROC area
         # First aggregate all false positive rates
-        all_fpr = np.unique(np.concatenate([fpr_dict[x] for x in range(len(classes))]))
+        all_fpr = np.unique(
+            np.concatenate([fpr_dict[x] for x in range(len(classes))]))
 
         # Then interpolate all ROC curves at this points
         mean_tpr = np.zeros_like(all_fpr)
@@ -447,12 +491,15 @@ def plot_roc(y_true, y_probas, title='ROC Curves',
         mean_tpr /= len(classes)
         roc_auc = auc(all_fpr, mean_tpr)
 
-        ax.plot(all_fpr, mean_tpr,
+        ax.plot(all_fpr,
+                mean_tpr,
                 label='macro-average ROC curve '
-                      '(area = {0:0.2f})'.format(roc_auc),
-                color='navy', linestyle=':', linewidth=4)
+                '(area = {0:0.2f})'.format(roc_auc),
+                color='navy',
+                linestyle=':',
+                linewidth=4)
 
-    ax.plot([0, 1], [0, 1], 'k--', lw=2)
+    ax.plot([0, 1], [0, 1], 'k--', lw=4)
     ax.set_xlim([0.0, 1.0])
     ax.set_ylim([0.0, 1.05])
     ax.set_xlabel('False Positive Rate', fontsize=text_fontsize)
@@ -462,8 +509,12 @@ def plot_roc(y_true, y_probas, title='ROC Curves',
     return ax
 
 
-def plot_ks_statistic(y_true, y_probas, title='KS Statistic Plot',
-                      ax=None, figsize=None, title_fontsize="large",
+def plot_ks_statistic(y_true,
+                      y_probas,
+                      title='KS Statistic Plot',
+                      ax=None,
+                      figsize=None,
+                      title_fontsize="large",
                       text_fontsize="medium"):
     """Generates the KS Statistic plot from labels and scores/probabilities
 
@@ -531,10 +582,13 @@ def plot_ks_statistic(y_true, y_probas, title='KS Statistic Plot',
     ax.plot(thresholds, pct1, lw=3, label='Class {}'.format(classes[0]))
     ax.plot(thresholds, pct2, lw=3, label='Class {}'.format(classes[1]))
     idx = np.where(thresholds == max_distance_at)[0][0]
-    ax.axvline(max_distance_at, *sorted([pct1[idx], pct2[idx]]),
-               label='KS Statistic: {:.3f} at {:.3f}'.format(ks_statistic,
-                                                             max_distance_at),
-               linestyle=':', lw=3, color='black')
+    ax.axvline(max_distance_at,
+               *sorted([pct1[idx], pct2[idx]]),
+               label='KS Statistic: {:.3f} at {:.3f}'.format(
+                   ks_statistic, max_distance_at),
+               linestyle=':',
+               lw=3,
+               color='black')
 
     ax.set_xlim([0.0, 1.0])
     ax.set_ylim([0.0, 1.0])
@@ -549,10 +603,13 @@ def plot_ks_statistic(y_true, y_probas, title='KS Statistic Plot',
 
 @deprecated('This will be removed in v0.5.0. Please use '
             'scikitplot.metrics.plot_precision_recall instead.')
-def plot_precision_recall_curve(y_true, y_probas,
+def plot_precision_recall_curve(y_true,
+                                y_probas,
                                 title='Precision-Recall Curve',
-                                curves=('micro', 'each_class'), ax=None,
-                                figsize=None, cmap='nipy_spectral',
+                                curves=('micro', 'each_class'),
+                                ax=None,
+                                figsize=None,
+                                cmap='nipy_spectral',
                                 title_fontsize="large",
                                 text_fontsize="medium"):
     """Generates the Precision Recall Curve from labels and probabilities
@@ -630,8 +687,8 @@ def plot_precision_recall_curve(y_true, y_probas,
         y_true = np.hstack((1 - y_true, y_true))
 
     for i in range(len(classes)):
-        average_precision[i] = average_precision_score(y_true[:, i],
-                                                       probas[:, i])
+        average_precision[i] = average_precision_score(y_true[:, i], probas[:,
+                                                                            i])
 
     # Compute micro-average ROC curve and ROC area
     micro_key = 'micro'
@@ -642,7 +699,8 @@ def plot_precision_recall_curve(y_true, y_probas,
 
     precision[micro_key], recall[micro_key], _ = precision_recall_curve(
         y_true.ravel(), probas.ravel())
-    average_precision[micro_key] = average_precision_score(y_true, probas,
+    average_precision[micro_key] = average_precision_score(y_true,
+                                                           probas,
                                                            average='micro')
 
     if ax is None:
@@ -653,17 +711,22 @@ def plot_precision_recall_curve(y_true, y_probas,
     if 'each_class' in curves:
         for i in range(len(classes)):
             color = plt.cm.get_cmap(cmap)(float(i) / len(classes))
-            ax.plot(recall[i], precision[i], lw=2,
+            ax.plot(recall[i],
+                    precision[i],
+                    lw=2,
                     label='Precision-recall curve of class {0} '
-                          '(area = {1:0.3f})'.format(classes[i],
-                                                     average_precision[i]),
+                    '(area = {1:0.3f})'.format(classes[i],
+                                               average_precision[i]),
                     color=color)
 
     if 'micro' in curves:
-        ax.plot(recall[micro_key], precision[micro_key],
+        ax.plot(recall[micro_key],
+                precision[micro_key],
                 label='micro-average Precision-recall curve '
-                      '(area = {0:0.3f})'.format(average_precision[micro_key]),
-                color='navy', linestyle=':', linewidth=4)
+                '(area = {0:0.3f})'.format(average_precision[micro_key]),
+                color='navy',
+                linestyle=':',
+                linewidth=4)
 
     ax.set_xlim([0.0, 1.0])
     ax.set_ylim([0.0, 1.05])
@@ -674,11 +737,14 @@ def plot_precision_recall_curve(y_true, y_probas,
     return ax
 
 
-def plot_precision_recall(y_true, y_probas,
+def plot_precision_recall(y_true,
+                          y_probas,
                           title='Precision-Recall Curve',
                           plot_micro=True,
-                          classes_to_plot=None, ax=None,
-                          figsize=None, cmap='nipy_spectral',
+                          classes_to_plot=None,
+                          ax=None,
+                          figsize=None,
+                          cmap='nipy_spectral',
                           title_fontsize="large",
                           text_fontsize="medium"):
     """Generates the Precision Recall Curve from labels and probabilities
@@ -748,39 +814,44 @@ def plot_precision_recall(y_true, y_probas,
 
     binarized_y_true = label_binarize(y_true, classes=classes)
     if len(classes) == 2:
-        binarized_y_true = np.hstack(
-            (1 - binarized_y_true, binarized_y_true))
+        binarized_y_true = np.hstack((1 - binarized_y_true, binarized_y_true))
 
     if ax is None:
-        fig, ax = plt.subplots(1, 1, figsize=figsize)
+        fig, ax = plt.subplots(1, 1, figsize=figsize, dpi=650)
 
     ax.set_title(title, fontsize=title_fontsize)
 
     indices_to_plot = np.in1d(classes, classes_to_plot)
+    line_types = ['solid', ':'] * (len(classes) // 2)
     for i, to_plot in enumerate(indices_to_plot):
         if to_plot:
             average_precision = average_precision_score(
-                binarized_y_true[:, i],
-                probas[:, i])
-            precision, recall, _ = precision_recall_curve(
-                y_true, probas[:, i], pos_label=classes[i])
+                binarized_y_true[:, i], probas[:, i])
+            precision, recall, _ = precision_recall_curve(y_true,
+                                                          probas[:, i],
+                                                          pos_label=classes[i])
             color = plt.cm.get_cmap(cmap)(float(i) / len(classes))
-            ax.plot(recall, precision, lw=2,
-                    label='Precision-recall curve of class {0} '
-                          '(area = {1:0.3f})'.format(classes[i],
-                                                     average_precision),
-                    color=color)
+            ax.plot(recall,
+                    precision,
+                    lw=4,
+                    label='Class {0} '
+                    '(AUC = {1:0.3f})'.format(classes[i], average_precision),
+                    color=color,
+                    linestyle=line_types[i])
 
     if plot_micro:
-        precision, recall, _ = precision_recall_curve(
-            binarized_y_true.ravel(), probas.ravel())
+        precision, recall, _ = precision_recall_curve(binarized_y_true.ravel(),
+                                                      probas.ravel())
         average_precision = average_precision_score(binarized_y_true,
                                                     probas,
                                                     average='micro')
-        ax.plot(recall, precision,
+        ax.plot(recall,
+                precision,
                 label='micro-average Precision-recall curve '
-                      '(area = {0:0.3f})'.format(average_precision),
-                color='navy', linestyle=':', linewidth=4)
+                '(area = {0:0.3f})'.format(average_precision),
+                color='navy',
+                linestyle=':',
+                linewidth=4)
 
     ax.set_xlim([0.0, 1.0])
     ax.set_ylim([0.0, 1.05])
@@ -791,9 +862,15 @@ def plot_precision_recall(y_true, y_probas,
     return ax
 
 
-def plot_silhouette(X, cluster_labels, title='Silhouette Analysis',
-                    metric='euclidean', copy=True, ax=None, figsize=None,
-                    cmap='nipy_spectral', title_fontsize="large",
+def plot_silhouette(X,
+                    cluster_labels,
+                    title='Silhouette Analysis',
+                    metric='euclidean',
+                    copy=True,
+                    ax=None,
+                    figsize=None,
+                    cmap='nipy_spectral',
+                    title_fontsize="large",
                     text_fontsize="medium"):
     """Plots silhouette analysis of clusters provided.
 
@@ -861,7 +938,8 @@ def plot_silhouette(X, cluster_labels, title='Silhouette Analysis',
 
     silhouette_avg = silhouette_score(X, cluster_labels, metric=metric)
 
-    sample_silhouette_values = silhouette_samples(X, cluster_labels,
+    sample_silhouette_values = silhouette_samples(X,
+                                                  cluster_labels,
                                                   metric=metric)
 
     if ax is None:
@@ -889,15 +967,22 @@ def plot_silhouette(X, cluster_labels, title='Silhouette Analysis',
         color = plt.cm.get_cmap(cmap)(float(i) / n_clusters)
 
         ax.fill_betweenx(np.arange(y_lower, y_upper),
-                         0, ith_cluster_silhouette_values,
-                         facecolor=color, edgecolor=color, alpha=0.7)
+                         0,
+                         ith_cluster_silhouette_values,
+                         facecolor=color,
+                         edgecolor=color,
+                         alpha=0.7)
 
-        ax.text(-0.05, y_lower + 0.5 * size_cluster_i, str(le.classes_[i]),
+        ax.text(-0.05,
+                y_lower + 0.5 * size_cluster_i,
+                str(le.classes_[i]),
                 fontsize=text_fontsize)
 
         y_lower = y_upper + 10
 
-    ax.axvline(x=silhouette_avg, color="red", linestyle="--",
+    ax.axvline(x=silhouette_avg,
+               color="red",
+               linestyle="--",
                label='Silhouette score: {0:0.3f}'.format(silhouette_avg))
 
     ax.set_yticks([])  # Clear the y-axis labels / ticks
@@ -909,10 +994,16 @@ def plot_silhouette(X, cluster_labels, title='Silhouette Analysis',
     return ax
 
 
-def plot_calibration_curve(y_true, probas_list, clf_names=None, n_bins=10,
+def plot_calibration_curve(y_true,
+                           probas_list,
+                           clf_names=None,
+                           n_bins=10,
                            title='Calibration plots (Reliability Curves)',
-                           ax=None, figsize=None, cmap='nipy_spectral',
-                           title_fontsize="large", text_fontsize="medium"):
+                           ax=None,
+                           figsize=None,
+                           cmap='nipy_spectral',
+                           title_fontsize="large",
+                           text_fontsize="medium"):
     """Plots calibration curves for a set of classifier probability estimates.
 
     Plotting the calibration curves of a classifier is useful for determining
@@ -997,8 +1088,9 @@ def plot_calibration_curve(y_true, probas_list, clf_names=None, n_bins=10,
                          'works for binary classification')
 
     if clf_names is None:
-        clf_names = ['Classifier {}'.format(x+1)
-                     for x in range(len(probas_list))]
+        clf_names = [
+            'Classifier {}'.format(x + 1) for x in range(len(probas_list))
+        ]
 
     if len(clf_names) != len(probas_list):
         raise ValueError('Length {} of `clf_names` does not match length {} of'
@@ -1029,8 +1121,11 @@ def plot_calibration_curve(y_true, probas_list, clf_names=None, n_bins=10,
 
         color = plt.cm.get_cmap(cmap)(float(i) / len(probas_list))
 
-        ax.plot(mean_predicted_value, fraction_of_positives, 's-',
-                label=clf_names[i], color=color)
+        ax.plot(mean_predicted_value,
+                fraction_of_positives,
+                's-',
+                label=clf_names[i],
+                color=color)
 
     ax.set_title(title, fontsize=title_fontsize)
 
@@ -1043,8 +1138,12 @@ def plot_calibration_curve(y_true, probas_list, clf_names=None, n_bins=10,
     return ax
 
 
-def plot_cumulative_gain(y_true, y_probas, title='Cumulative Gains Curve',
-                         ax=None, figsize=None, title_fontsize="large",
+def plot_cumulative_gain(y_true,
+                         y_probas,
+                         title='Cumulative Gains Curve',
+                         ax=None,
+                         figsize=None,
+                         title_fontsize="large",
                          text_fontsize="medium"):
     """Generates the Cumulative Gains Plot from labels and scores/probabilities
 
@@ -1131,8 +1230,12 @@ def plot_cumulative_gain(y_true, y_probas, title='Cumulative Gains Curve',
     return ax
 
 
-def plot_lift_curve(y_true, y_probas, title='Lift Curve',
-                    ax=None, figsize=None, title_fontsize="large",
+def plot_lift_curve(y_true,
+                    y_probas,
+                    title='Lift Curve',
+                    ax=None,
+                    figsize=None,
+                    title_fontsize="large",
                     text_fontsize="medium"):
     """Generates the Lift Curve from labels and scores/probabilities
 

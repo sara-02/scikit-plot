@@ -18,6 +18,7 @@ def read(*filenames, **kwargs):
             buf.append(f.read())
     return sep.join(buf)
 
+
 long_description = read('README.md')
 # long_description = ''
 
@@ -33,6 +34,7 @@ class PyTest(TestCommand):
         errcode = pytest.main(self.test_args)
         sys.exit(errcode)
 
+
 setup(
     name='scikit-plot',
     version='0.3.7',
@@ -41,20 +43,18 @@ setup(
     author='Reiichiro Nakano',
     tests_require=['pytest'],
     install_requires=[
-        'matplotlib>=1.4.0',
-        'scikit-learn>=0.18',
-        'scipy>=0.9',
-        'joblib>=0.10'
+        'matplotlib>=1.4.0', 'scikit-learn>=0.18', 'scipy>=0.9', 'joblib>=0.10'
     ],
     cmdclass={'test': PyTest},
     author_email='reiichiro.s.nakano@gmail.com',
-    description='An intuitive library to add plotting functionality to scikit-learn objects.',
+    description=
+    'An intuitive library to add plotting functionality to scikit-learn objects.',
     long_description=long_description,
     packages=['scikitplot'],
     include_package_data=True,
     platforms='any',
     test_suite='scikitplot.tests.test_scikitplot',
-    classifiers = [
+    classifiers=[
         'Programming Language :: Python',
         'Programming Language :: Python :: 2',
         'Programming Language :: Python :: 2.7',
@@ -67,8 +67,7 @@ setup(
         'License :: OSI Approved :: MIT License',
         'Operating System :: OS Independent',
         'Topic :: Scientific/Engineering :: Visualization',
-        ],
+    ],
     extras_require={
         'testing': ['pytest'],
-    }
-)
+    })
