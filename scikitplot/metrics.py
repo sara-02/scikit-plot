@@ -410,6 +410,7 @@ def plot_roc(y_true, y_probas, title='ROC Curves',
     tpr_dict = dict()
 
     indices_to_plot = np.in1d(classes, classes_to_plot)
+    line_types = ['solid','dotted']
     for i, to_plot in enumerate(indices_to_plot):
         fpr_dict[i], tpr_dict[i], _ = roc_curve(y_true, probas[:, i],
                                                 pos_label=classes[i])
@@ -418,7 +419,7 @@ def plot_roc(y_true, y_probas, title='ROC Curves',
             color = plt.cm.get_cmap(cmap)(float(i) / len(classes))
             ax.plot(fpr_dict[i], tpr_dict[i], lw=2, color=color,
                     label='ROC curve of class {0} (area = {1:0.2f})'
-                          ''.format(classes[i], roc_auc))
+                          ''.format(classes[i], roc_auc),linestyle=line_types[i], linewidth=4)
 
     if plot_micro:
         binarized_y_true = label_binarize(y_true, classes=classes)
