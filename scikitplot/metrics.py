@@ -324,7 +324,7 @@ def plot_roc_curve(y_true,
             color = plt.cm.get_cmap(cmap)(float(i) / len(classes))
             ax.plot(fpr[i],
                     tpr[i],
-                    lw=2,
+                    lw=4,
                     color=color,
                     label='ROC curve of class {0} (area = {1:0.2f})'
                     ''.format(classes[i], roc_auc[i]))
@@ -350,9 +350,13 @@ def plot_roc_curve(y_true,
     ax.plot([0, 1], [0, 1], 'k--', lw=2)
     ax.set_xlim([0.0, 1.0])
     ax.set_ylim([0.0, 1.05])
-    ax.set_xlabel('False Positive Rate', fontsize=text_fontsize)
-    ax.set_ylabel('True Positive Rate', fontsize=text_fontsize)
-    ax.tick_params(labelsize=text_fontsize)
+    ax.set_xlabel('False Positive Rate',
+                  fontsize=text_fontsize,
+                  fontweight='bold')
+    ax.set_ylabel('True Positive Rate',
+                  fontsize=text_fontsize,
+                  fontweight='bold')
+    ax.tick_params(labelsize=text_fontsize + 7)
     ax.legend(loc='lower right', fontsize=text_fontsize)
     return ax
 
@@ -440,6 +444,8 @@ def plot_roc(y_true,
         fig, ax = plt.subplots(1, 1, figsize=figsize, dpi=650)
 
     ax.set_title(title, fontsize=title_fontsize)
+    # plt.setp(ax.yaxis.get_ticklines(), 'markersize', 25)
+    # plt.setp(ax.yaxis.get_ticklines(), 'markeredgewidth', 3)
 
     fpr_dict = dict()
     tpr_dict = dict()
@@ -453,13 +459,15 @@ def plot_roc(y_true,
         if to_plot:
             roc_auc = auc(fpr_dict[i], tpr_dict[i])
             color = plt.cm.get_cmap(cmap)(float(i) / len(classes))
-            ax.plot(fpr_dict[i],
-                    tpr_dict[i],
-                    lw=4,
-                    color=color,
-                    label='Class {0} (AUC = {1:0.2f})'
-                    ''.format(classes[i], roc_auc),
-                    linestyle=line_types[i])
+            ax.plot(
+                fpr_dict[i],
+                tpr_dict[i],
+                lw=4,
+                color=color,
+                label='Class {0}'.format(classes[i]),
+                # label='Class {0} (AUC = {1:0.2f})'
+                # ''.format(classes[i], roc_auc),
+                linestyle=line_types[i])
 
     if plot_micro:
         binarized_y_true = label_binarize(y_true, classes=classes)
@@ -502,9 +510,13 @@ def plot_roc(y_true,
     ax.plot([0, 1], [0, 1], 'k--', lw=4)
     ax.set_xlim([0.0, 1.0])
     ax.set_ylim([0.0, 1.05])
-    ax.set_xlabel('False Positive Rate', fontsize=text_fontsize)
-    ax.set_ylabel('True Positive Rate', fontsize=text_fontsize)
-    ax.tick_params(labelsize=text_fontsize)
+    ax.set_xlabel('False Positive Rate',
+                  fontsize=text_fontsize,
+                  fontweight='bold')
+    ax.set_ylabel('True Positive Rate',
+                  fontsize=text_fontsize,
+                  fontweight='bold')
+    ax.tick_params(labelsize=text_fontsize + 7)
     ax.legend(loc='lower right', fontsize=text_fontsize)
     return ax
 
@@ -820,6 +832,8 @@ def plot_precision_recall(y_true,
         fig, ax = plt.subplots(1, 1, figsize=figsize, dpi=650)
 
     ax.set_title(title, fontsize=title_fontsize)
+    # plt.setp(ax.yaxis.get_ticklines(), 'markersize', 25)
+    # plt.setp(ax.yaxis.get_ticklines(), 'markeredgewidth', 3)
 
     indices_to_plot = np.in1d(classes, classes_to_plot)
     line_types = ['solid', ':'] * (len(classes) // 2)
@@ -831,13 +845,14 @@ def plot_precision_recall(y_true,
                                                           probas[:, i],
                                                           pos_label=classes[i])
             color = plt.cm.get_cmap(cmap)(float(i) / len(classes))
-            ax.plot(recall,
-                    precision,
-                    lw=4,
-                    label='Class {0} '
-                    '(AUC = {1:0.3f})'.format(classes[i], average_precision),
-                    color=color,
-                    linestyle=line_types[i])
+            ax.plot(
+                recall,
+                precision,
+                lw=4,
+                label='Class {0} '.format(classes[i]),
+                # '(AUC = {1:0.3f})'.format(classes[i], average_precision),
+                color=color,
+                linestyle=line_types[i])
 
     if plot_micro:
         precision, recall, _ = precision_recall_curve(binarized_y_true.ravel(),
@@ -855,8 +870,8 @@ def plot_precision_recall(y_true,
 
     ax.set_xlim([0.0, 1.0])
     ax.set_ylim([0.0, 1.05])
-    ax.set_xlabel('Recall')
-    ax.set_ylabel('Precision')
+    ax.set_xlabel('Recall', fontsize=text_fontsize, fontweight='bold')
+    ax.set_ylabel('Precision', fontsize=text_fontsize, fontweight='bold')
     ax.tick_params(labelsize=text_fontsize)
     ax.legend(loc='best', fontsize=text_fontsize)
     return ax

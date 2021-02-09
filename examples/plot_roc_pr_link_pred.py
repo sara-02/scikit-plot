@@ -19,9 +19,10 @@ plot_roc(y_true=y,
          plot_macro=False,
          text_fontsize=30,
          title_fontsize=30,
-         figsize=(22, 17),
+         figsize=(30, 24),
          title='(a)')
-plt.savefig("roc_link_pred.png", dpi=650, bbox_inches="tight")
+# plt.savefig("roc_link_pred.svg", dpi=850, bbox_inches="tight")
+plt.savefig("roc_link_pred.png", dpi=850, bbox_inches="tight")
 
 plot_precision_recall(y_true=y,
                       y_probas=probas,
@@ -29,9 +30,10 @@ plot_precision_recall(y_true=y,
                       classes_to_plot=[1, 2],
                       text_fontsize=30,
                       title_fontsize=30,
-                      figsize=(22, 17),
+                      figsize=(30, 24),
                       title='(b)')
-plt.xlabel("Recall", fontsize=30)
-plt.ylabel("Precision", fontsize=30)
+# plt.xlabel("Recall", fontsize=30)
+# plt.ylabel("Precision", fontsize=30)
 plt.legend(loc='lower right', fontsize=30)
-plt.savefig("pr_link_pred.png", dpi=650, bbox_inches="tight")
+# plt.savefig("pr_link_pred.svg", dpi=850, bbox_inches="tight")
+plt.savefig("pr_link_pred.png", dpi=850, bbox_inches="tight")
